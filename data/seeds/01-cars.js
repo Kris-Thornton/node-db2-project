@@ -10,7 +10,7 @@ const cars = [
         transmission: 'manual',
     },
     {
-        vin: '1111111111111',
+        vin: '2222222222222',
         make: 'ford',
         model: 'mustang',
         mileage: 357654,
@@ -18,7 +18,7 @@ const cars = [
         transmission: 'manual',
     },
     {
-        vin: '1111111111111',
+        vin: '3333333333333',
         make: 'chevy',
         model: 'impala',
         mileage: 197412,
