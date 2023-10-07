@@ -18,7 +18,7 @@ const cars = [
         transmission: 'manual',
     },
     {
-        vin: '3333333333333',
+        vin: '3333333333334',
         make: 'chevy',
         model: 'impala',
         mileage: 197412,
@@ -28,10 +28,7 @@ const cars = [
 ]
 
 
-exports.seed = function(knex) {
-    return knex('cars')
-    .truncate().then(() => {
-        return knex('cars').insert(cars)
-    })
-    
+exports.seed = async function(knex) {
+    await knex('cars').truncate()
+    await knex('cars').insert(cars)
 }

@@ -1,25 +1,36 @@
-const router = require('express').Router()
+const express = require('express')
+const router = express.Router()
+const md = require('./cars-middleware')
 const Car = require('./cars-model')
+const {
+    checkCarId
+} = require('./cars-middleware')
 
 
 
 
 
 
-
-router.get('./', async (req, res, next) => {
+router.get('./', checkCarId, async (req, res, next) => {
     try {
+       
         const cars = await Car.getAll()
         res.json(cars)
     }catch (err) {
-        next({ status: 402, message: 'not working'})
+        next(err)
     }
 })
-router.get('./:id', (req, res, next) => {
-
+router.get('./:id', checkCarId, async (req, res, next) => {
+    try {
+       
+        const car = await Car.getById(req.params.id)
+        res.json(car)
+    }catch (err) {
+        next(err)
+    }
 })
 router.post('./', (req, res, next) => {
-
+    res.json('posting new car')
 })
 
 module.exports = router;

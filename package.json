@@ -10,7 +10,7 @@
     "rollback": "knex migrate:rollback",
     "migrateup": "knex migrate:up",
     "migratedown": "knex migrate:down",
-    "migfull": "npm run migratedown && npm run migrateup",
+    "migfull": "npm run migratedown && npm run migrateup && npm run seed", 
     "seed": "knex seed:run"
   },
   "devDependencies": {
