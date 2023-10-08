@@ -5,11 +5,13 @@ const db = require('../../data/db-config');
 
 const checkCarId = async (req, res, next) => {
   try {
-    const error = { status: 400 }
+    
     const car = await Car.getById(req.params.id)
-    if(!car) {
-      error.message = 'not working'
+    if (!car) {
+      next({ status: 404, 
+        message: `not found`})
     }else{
+      req.car=car
       next()
     }
 }catch (err) {

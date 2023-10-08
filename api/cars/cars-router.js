@@ -11,7 +11,7 @@ const {
 
 
 
-router.get('./', checkCarId, async (req, res, next) => {
+router.get('/',  async (req, res, next) => {
     try {
        
         const cars = await Car.getAll()
@@ -20,16 +20,17 @@ router.get('./', checkCarId, async (req, res, next) => {
         next(err)
     }
 })
-router.get('./:id', checkCarId, async (req, res, next) => {
-    try {
-       
-        const car = await Car.getById(req.params.id)
-        res.json(car)
-    }catch (err) {
-        next(err)
-    }
+
+
+
+router.get('/:id', checkCarId, async (req, res, next) => {
+    res.json(req.car)
 })
-router.post('./', (req, res, next) => {
+
+
+
+
+router.post('/', (req, res, next) => {
     res.json('posting new car')
 })
 
