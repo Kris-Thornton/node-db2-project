@@ -1,37 +1,41 @@
-const express = require('express')
-const router = express.Router()
-const md = require('./cars-middleware')
-const Car = require('./cars-model')
-const {
-    checkCarId
-} = require('./cars-middleware')
+const express = require('express');
 
+const { checkCarId, checkCarPayload, checkVinNumberUnique, checkVinNumberValid } = require('./cars-middleware');
+const Cars = require('./cars-model');
 
+const router = express.Router();
 
+router.get('/', (req,res,next) => {
+    Cars.getAll()
+    .then(car => {
+        res.json(car)
+    })    
+    .catch(next)
+});
 
+router.get('/:id', (req,res)=>{
+    Cars.getById(req.params.id)
+    .then(car => {
+        if(car) {
+            res.json(car);
+        }else{
+            res.status(404).json({ message: 'id not found'});
+        }
+    })
+    .catch(err => {
+        res.status(500).json({message: `failed to retrieve car: ${err.message}`});
+    });
+});
 
-
-router.get('/',  async (req, res, next) => {
-    try {
-       
-        const cars = await Car.getAll()
-        res.json(cars)
-    }catch (err) {
+router.post('/', checkCarPayload, checkVinNumberValid, checkVinNumberUnique, async (req,res,next)=> {
+    try{
+        const car = await Cars.create(req.body)
+        res.json(car)
+    }catch(err){
         next(err)
     }
-})
+});
 
 
-
-router.get('/:id', checkCarId, async (req, res, next) => {
-    res.json(req.car)
-})
-
-
-
-
-router.post('/', (req, res, next) => {
-    res.json('posting new car')
-})
 
 module.exports = router;
